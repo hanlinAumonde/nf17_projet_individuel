@@ -16,7 +16,7 @@ __Maître d'oeuvre__ : Hanlin WU
  - Code SQL : données , tables et vues
 
 ## Objets gérés et ses propriétés
-* __Bâtiment__ : nom(unique) , superficie , addrGPS , nbEtage.Un bâtiment compose plusieurs __étage__s , chacun possède un plan de lui-même.En même temps , un bâtiment compose plusieurs salles.
+* __Bâtiment__ : nom(unique) , superficie , addrGPS , nbEtage.Un bâtiment compose plusieurs __étage__ s , chacun possède un plan de lui-même.En même temps , un bâtiment compose plusieurs salles.
 * __Salle__ : nom(unique) , superficie , nbMaxHum , photos , planSalle , airComprime , gazSpec(Butane, Méthane, O2, Azote,...) , ElecTriphase , nbPriseElec , nbPriseResaux. Dans une salle , on peut trouver les objets suivant :
   * __Machine__ : codeMach(unique) , modele , description , puissanceElec , BesoinTriphase , BesoinResaux , NCM(numéro contrat maintenance) , EM(entreprise de maintenance) , BesoinGaz(Butane, Méthane, O2, Azote,...) , taille.
   * __PosteTele__ : numInt(unique) , numExt , type , modeleTele , marque , host.
