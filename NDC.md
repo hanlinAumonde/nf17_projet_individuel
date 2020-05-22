@@ -16,8 +16,8 @@ __Maître d'oeuvre__ : Hanlin WU
  - Code SQL : données , tables et vues
 
 ## Objets gérés et ses propriétés
-* __Bâtiment__ : nom(unique) , superficie , addrGPS , nbEtage.Un bâtiment compose plusieurs __etage__ s , chacun possède un plan de lui-même.En même temps , un bâtiment compose plusieurs salles.
-* __Salle__ : nom(unique) , superficie , nbMaxHum , photos , planSalle , airComprime , gazSpec(Butane, Méthane, O2, Azote,...) , ElecTriphase , nbPriseElec , nbPriseResaux. Dans une salle , on peut trouver les objets suivant :
+* __Bâtiment__ : nom(unique) , superficieB , addrGPS , nbEtage.Un bâtiment compose plusieurs __etage__ s , chacun possède un plan de lui-même.En même temps , un bâtiment compose plusieurs salles.
+* __Salle__ : nom(unique) , superficieS , capaciteHumMax , photos , planSalle , airComprime , gazSpec(Butane, Méthane, O2, Azote,...) , ElecTriphase , nbPriseElec , nbPriseResaux. Dans une salle , on peut trouver les objets suivant :
   * __Machine__ : codeMach(unique) , modele , description , puissanceElec , BesoinTriphase , BesoinResaux , NCM(numéro contrat maintenance) , EM(entreprise de maintenance) , besoinGaz(Butane, Méthane, O2, Azote,...) , taille.
   * __PosteTele__ : numInt(unique) , numExt , type , modeleTele , marque , host.
   * __MoyenIT__ : nom(unique) , type(PC,portable,serveur) , OS , addrMAC , responsable , projetCharge , lienMachine.
@@ -36,6 +36,7 @@ Rq :
 * Chaque étage possède aussi son numéro.
 * Dans la classe Salle et Machine, gazSpec et besionGaz sont les attributs multivalués.
 * Pour identifier les différents machines, on ajout une clé codeMach qui est unique pour chaque machine,ex: 'Imp1-1'.
+* On fait le gestion des images au niveaux application
 
 ## Contraintes entre les objets et les propriétés :
 * Chaque salle est situé dans un seul étage
