@@ -125,6 +125,7 @@ Laboratoire "1"--"2..*" Employe
 (Laboratoire , Employe) . RHlabo
 Projet "1"--"2..*" Employe 
 (Projet , Employe) . RHprojet
+Projet "1"--"*" MoyenIT : utiliser >
 Departement "1"--"2..*" Employe 
 (Departement , Employe) . RHdepartement
 PosteTele "1"-"0..1" Employe : possede <
