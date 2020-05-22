@@ -34,7 +34,7 @@ __Maître d'oeuvre__ : Hanlin WU
 
 Rq :
 * Chaque étage possède aussi son numéro.
-* Dans la classe Salle et Machine, gazSpec et besionGaz sont les attributs multivalués.
+* Dans la classe Salle, gazSpec est l'attribut multivalué.
 * Pour identifier les différents machines, on ajout une clé codeMach qui est unique pour chaque machine,ex: 'Imp1-1'.
 * On fait le gestion des images au niveaux application
 
