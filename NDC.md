@@ -47,6 +47,7 @@ Rq :
 * Le nombre d'employés dans la salle ne peut pas dépasser la capacité maximale de la salle
 * Les employés n'ont pas le droit d'attribuer des patrimoines
 * Seul les directeurs ont le droit de changer les membres du laboratoire/département, ainsi que de sélectionner les acteurs du projet
+* Un chef d'un projet a le droit de définir le role des acteurs
 
 ## Vues pour consulter des données(compléter après finir sql)
 
@@ -55,7 +56,9 @@ Rq :
       - Gestion de tous les données
  * Directeur de laboratoire/departement :
       - Gestion des membres de laboratoire/departement
-      - Gestion des affectations du employé sur les projets
+      - Gestion des choix du employé sur les projets
+ * Chef d'un projet:
+      - Gestion des roles des acteurs
  * Employé :
       - Consulter les patrimoines de notre entreprise
       - Consulter les relations hiérarchiques
