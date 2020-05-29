@@ -2,14 +2,13 @@
   -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int)
 --Dans les batiments :
   -Etage(#nomBat => Batiment , #numEtage : int , planEtage : image)
-  -Salle(#nomBatiment => Batiment , #numE => Etage , #nomS : string , superficieS : int , capaciteHumMax : int , planSalle : image , airComprime : boolean , elecTriphase : boolean , nbPriseElec : int , nbPriseResaux : int)
-  *Attention,il y a des normalisation ici sur les salles :
-    -PhotoSalle(#nom_Salle => Salle , #photos : image)
-    -GazSpecifique(#nomSalle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
+  -Salle(#numE => Etage , #nomS : string , superficieS : int , capaciteHumMax : int , planSalle : image , airComprime : boolean , elecTriphase : boolean , nbPriseElec : int , nbPriseResaux : int)
+     *Attention,il y a des normalisation ici sur les salles :
+       -PhotoSalle(#nom_Salle => Salle , #photos : image)
+       -GazSpecifique(#nomSalle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
   
-  Contraintes :  Projection(Batiment,nomB) = Proection(Etage,nomBat)
-                 Projection(Batiment,nomB) = Proection(Salle,nomBatiment) 
-                 Projection(Etage,numEtage) = Proection(Salle,umE)
+  Contraintes :  Projection(Batiment,nomB) = Projection(Etage,nomBat)
+                 Projection(Etage,numEtage) = Projection(Salle,numE)
 
 --Les objets qui peuvent se trouver dans les salles :
   -Machine(#codeMach : string , #sallemach => Salle , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
