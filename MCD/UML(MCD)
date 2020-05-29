@@ -132,7 +132,7 @@ Departement "1"--"*" Employe
 (Departement , Employe) . RHdepartement
 PosteTele "1"-"0..1" Employe : possede <
 Employe "0..1"-"*" MoyenIT : etre responsable de >
-MoyenIT "*"-"1" Machine : etre lié à >
+MoyenIT "*"-"0..1" Machine : etre lié à >
 PosteTele "*"--"1" Salle : se trouver dans >
 Employe "*"--"1" Salle : se trouver dans >
 MoyenIT "*"--"1" Salle : se trouver dans >
