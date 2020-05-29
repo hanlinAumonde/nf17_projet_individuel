@@ -19,7 +19,7 @@
   
   -Machine(#codeMach : string , #sallemach => Salle , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
   
-  -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Eploye , typeIT : {PC,portable,serveur} , OS : string)
+  -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
       *Normalisation: AddressMoyenIT(#mIT => MoyenIT , #addr : string)
   
   -PosteTele(#nuInt : int , nuExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
