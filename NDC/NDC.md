@@ -35,7 +35,7 @@ Rq :
 * Pour identifier les différents machines, on ajout une clé codeMach qui est unique pour chaque machine,ex: 'Imp1-1'.
 * On fait le gestion des images au niveaux application
 
-##Choix des associations :
+## Choix des associations :
 * Un laboratoire / département possede plusieurs projets
 * Pour gérer les relation hiérarchiques entre les employés, on crée les classes d'association entre la classe employe et les organisations:
   * __RHlabo__
