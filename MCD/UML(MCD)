@@ -1,21 +1,23 @@
 @startuml
 class Organisation <<abstract>>{
-  sigle : string {key}
   nom : string
 }
 
 class Laboratoire{
+  sigle : string {key}
   logo : image
   thmatique_etude : text
 }
 
 class Projet{
+  sigle : string {key}
   date_start : date
   date_end : date
   description : text
 }
 
 class Departement{
+  sigle : string {key}
   domaine : text
 }
 
@@ -121,21 +123,21 @@ Organisation <|-- Projet
 Organisation <|-- Departement
 Laboratoire "1"-"*" Projet : possede >
 Projet "*"-"1" Departement : possede <
-Laboratoire "1"--"2..*" Employe 
+Laboratoire "1"--"*" Employe 
 (Laboratoire , Employe) . RHlabo
-Projet "1"--"2..*" Employe 
+Projet "1"--"*" Employe 
 (Projet , Employe) . RHprojet
 Projet "1"--"*" MoyenIT : utiliser >
-Departement "1"--"2..*" Employe 
+Departement "1"--"*" Employe 
 (Departement , Employe) . RHdepartement
 PosteTele "1"-"0..1" Employe : possede <
 Employe "0..1"-"*" MoyenIT : etre responsable de >
 MoyenIT "*"-"1" Machine : etre lié à >
-PosteTele "1..*"--"1" Salle : se trouver dans >
-Employe "1..*"--"1" Salle : se trouver dans >
+PosteTele "*"--"1" Salle : se trouver dans >
+Employe "*"--"1" Salle : se trouver dans >
 MoyenIT "*"--"1" Salle : se trouver dans >
 Machine "*"--"1" Salle : se trouver dans >
-Salle "1..*"--"1" Etage : possede <
+Salle "*"--"1" Etage : possede <
 Salle -* Batiment
 Etage -* Batiment
 @enduml
