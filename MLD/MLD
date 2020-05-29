@@ -34,7 +34,8 @@
                 
 --Les organisations :
 
-  //----C'est le cas d'héritage non complet avec classe mère abstraite (sans association ni clé au niveau de la classe mère),donc on choisit un héritage par les classes filles.  
+  //----C'est le cas d'héritage non complet avec classe mère abstraite (sans association ni clé au niveau de la classe mère),
+        donc on choisit un héritage par les classes filles.  
         Ici , la classe Organisation est une classe mère abstraite avec aucune clé et l'association-----//
         
   -Laboratoire(#sigleL : string , nom : string , logo : image , thmatique_etude : text)
@@ -49,3 +50,10 @@
                 OR
                 ( Projection(Departement,sigleD) = Projection(Projet,departement) AND Projection(Projet,labo) = {} )
                )
+               
+
+--Les relations entre les organisations et les employés : 
+
+  --Entre les laboratoires et les employés :
+    -RHlabo(#Labo => Laboratoire(sigleL) , #Employe => Employe(numBadge) , directeur : boolean)
+    
