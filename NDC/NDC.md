@@ -23,14 +23,11 @@ __Maître d'oeuvre__ : Hanlin WU
   * __MoyenIT__ : nom(unique) , type(PC,portable,serveur) , OS , addrMAC , responsable , projetCharge , lienMachine.
 * C'est très important de gérer les informations des employés suivant:
   * __Employe__ : numBadge(unique) , nom , prenom , e-mail , statut(CDI,CDD,stagiaire) , emplacement. Les employés peuvent être trouvés dans les salles.
-* __Organisation__ : sigle(unique) , nom. Une organisation peut être:
-  * __Laboratoire__ : logo , thematique.
-  * __Departement__ : domaine.
-  * __Projet__ : date_start , date_end , description.Un laboratoire/departement peut travailler sur plusieurs projets.
-* Pour gérer les relation hiérarchiques entre les employés, on crée les classes d'association entre la classe employe et les organisations:
-  * __RHlabo__
-  * __RHdepartement__
-  * __RHprojet__
+* __Organisation__ : nom. Une organisation peut être:
+  * __Laboratoire__ : sigleL(unique) , logo , thematique.
+  * __Departement__ : sigleD(unique) , domaine.
+  * __Projet__ : sigleP(unique) , date_start , date_end , description.Un laboratoire/departement peut travailler sur plusieurs projets.
+
 
 Rq :
 * Chaque étage possède aussi son numéro.
@@ -38,9 +35,23 @@ Rq :
 * Pour identifier les différents machines, on ajout une clé codeMach qui est unique pour chaque machine,ex: 'Imp1-1'.
 * On fait le gestion des images au niveaux application
 
+##Choix des associations :
+* Un laboratoire / département possede plusieurs projets
+* Pour gérer les relation hiérarchiques entre les employés, on crée les classes d'association entre la classe employe et les organisations:
+  * __RHlabo__
+  * __RHdepartement__
+  * __RHprojet__
+* Plusieurs employees , machines , moyens informatiques , postes telephoniques peuvent se trouver dans un salle
+* Un projet peut utiliser plusieurs moyens informatiques
+* Un employé peut posséder un poste téléphonique ou non
+* Un moyen informatique peut être responsable par un employé
+* Un moyen informatique peut être lié a une machine
+
 ## Contraintes entre les objets et les propriétés :
 * Chaque salle est situé dans un seul étage
 * Le téléphone peut ne pas avoir de propriétaire
+* Chaque projet appartient à un seul laboratoire / département
+* L'acteur du projet ne peut être sélectionné que dans le laboratoire / département correspondant au projet
 * Une organisation est soit un laboratoire , soit un département ,soit un projet
 * Un employé ne peut être membre/directeur que d'un seul laboratoire à la fois
 * Un employé ne peut être membre/directeur que d'un seul département à la fois
@@ -49,7 +60,7 @@ Rq :
 * Seul les directeurs ont le droit de changer les membres du laboratoire/département, ainsi que de sélectionner les acteurs du projet
 * Un chef d'un projet a le droit de définir le role des acteurs
 
-## Vues pour consulter des données(compléter après finir sql)
+## Vues pour consulter des données
 
 ## Liste des fonctions que les utilisateurs pourront effectués
  * Administrateur système :
