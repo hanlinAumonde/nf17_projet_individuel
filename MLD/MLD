@@ -1,7 +1,11 @@
 --Batiments :
+
   -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int)
+
 --Dans les batiments :
+  
   -Etage(#nomBat => Batiment , #numEtage : int , planEtage : image)
+ 
   -Salle(#numE => Etage , #nomS : string , superficieS : int , capaciteHumMax : int , planSalle : image , airComprime : boolean , elecTriphase : boolean , nbPriseElec : int , nbPriseResaux : int)
      *Attention,il y a des normalisation ici sur les salles :
        -PhotoSalle(#nom_Salle => Salle , #photos : image)
@@ -10,16 +14,38 @@
   Contraintes :  Projection(Batiment,nomB) = Projection(Etage,nomBat)
                  Projection(Etage,numEtage) = Projection(Salle,numE)
 
+
 --Les objets qui peuvent se trouver dans les salles :
+  
   -Machine(#codeMach : string , #sallemach => Salle , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
+  
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Eploye , typeIT : {PC,portable,serveur} , OS : string)
       *Normalisation: AddressMoyenIT(#mIT => MoyenIT , #addr : string)
+  
   -PosteTele(#nuInt : int , nuExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
+ 
   -Employe(#numBadge : int , #salleEmploye => Salle , nom : string , prenom : string , e-mail : string , statut : {CDI,CDD,stagiaire} , emplacement : text)
 
   Contraintes : Projection(Salle,nomS) = Proection(Machine,salleMach) AND Projection(Salle,nomS) = Proection(MoyenIT,salleIT) AND Projection(Salle,nomS) = Proection(PosteTele,salletele) AND Projection(Salle,nomS) = Proection(Employe,salleEmploye)
                 Projection(PosteTele,host) = Projection(Employe,numBadge) OR Projection(PosteTele,host) = {}
                 Projection(MoyenIT,resp) = Projection(Employe,numBadge) OR Projection(MoyenIT,resp) = {}
                 Projection(MoyenIT,MachineLie) = Projection(Machine,codeMach) OR Projection(MoyenIT,MachineLie) = {}
+
                 
 --Les organisations :
+
+  //----C'est le cas d'héritage non complet avec classe mère abstraite (sans association ni clé au niveau de la classe mère),donc on choisit un héritage par les classes filles.  
+        Ici , la classe Organisation est une classe mère abstraite avec aucune clé et l'association-----//
+        
+  -Laboratoire(#sigleL : string , nom : string , logo : image , thmatique_etude : text)
+  
+  -Departement(#sigleD : string , nom : string , domaine : text)
+  
+  -Projet(#sigleP : string , nom : string , description : text , date_start : date , date_end : date , #labo => Laboratoire , #departement => Departement)
+  
+ Contraintes:  
+               (
+                ( Projection(Laboratoire,sigleL) = Projection(Projet,labo) AND Projection(Projet,departement) = {} )
+                OR
+                ( Projection(Departement,sigleD) = Projection(Projet,departement) AND Projection(Projet,labo) = {} )
+               )
