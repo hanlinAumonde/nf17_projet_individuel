@@ -55,5 +55,20 @@
 --Les relations entre les organisations et les employés : 
 
   --Entre les laboratoires et les employés :
-    -RHlabo(#Labo => Laboratoire(sigleL) , #Employe => Employe(numBadge) , directeur : boolean)
+    -RHlabo(#Labo => Laboratoire(sigleL) , #EmployeL => Employe(numBadge) , directeurL : boolean)
     
+    Rq : La methode droite_direcL permet aux directeurs des laboratoires de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
+    
+  --Entre les departements et les employés :
+    -RHdepartement(#dep => Departement(sigleD) , #EmployeD => Employe(numBadge) , directeurD : boolean)
+    
+    Rq : La methode droite_direcD permet aux directeurs des departements de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
+    
+  --Entre les projets et les employés :
+    -RHprojet(#proj => Projet(sigleP) , #EmployeP => Employe(numBadge) , chef : boolean , role : string)
+    
+    Rq : La methode droite_chef permet de definir les roles des acteurs(mis au niveau applicatif)
+    
+  Contraintes : Projection(RHlabo,Labo) = Projection(Laboratoire,sigleL) AND Projjection(RHlabo,EmployeL) = Projection(Employe,numBadge)
+                Projection(RHdepartement,dep) = Projection(Departement,sigleD) AND Projjection(RHdepartement,EmployeD) = Projection(Employe,numBadge)
+                Projection(RHprojet,proj) = Projection(Projet,sigleP) AND Projjection(RHprojet,EmployeP) = Projection(Employe,numBadge)
