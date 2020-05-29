@@ -137,7 +137,6 @@ PosteTele "*"--"1" Salle : se trouver dans >
 Employe "*"--"1" Salle : se trouver dans >
 MoyenIT "*"--"1" Salle : se trouver dans >
 Machine "*"--"1" Salle : se trouver dans >
-Salle "*"--"1" Etage : possede <
-Salle -* Batiment
-Etage -* Batiment
+Salle --* "1..*" Etage
+Etage -* "1..*" Batiment
 @enduml
