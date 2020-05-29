@@ -4,20 +4,20 @@ class Organisation <<abstract>>{
 }
 
 class Laboratoire{
-  sigle : string {key}
+  sigleL : string {key}
   logo : image
   thmatique_etude : text
 }
 
 class Projet{
-  sigle : string {key}
+  sigleP : string {key}
   date_start : date
   date_end : date
   description : text
 }
 
 class Departement{
-  sigle : string {key}
+  sigleD : string {key}
   domaine : text
 }
 
