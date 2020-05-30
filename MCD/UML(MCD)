@@ -58,7 +58,7 @@ class typeit <<datatype>>{
   value:{PC,portable,serveur}
 }
 
-class Machine{
+class Machine <<abstract>>{
   codeMach : string {key}
   modeleMach : image
   description : text
@@ -116,7 +116,6 @@ class RessouceProjet_IT{
 Organisation <|-- Laboratoire
 Organisation <|-- Projet
 Organisation <|-- Departement
-Organisation "1"--"*" Machine : utilise >
 Laboratoire "0..1"--"*" Employe : etre membre de <
 Laboratoire "0..1"--"1" Employe : etre directeur de <
 Projet " "--" " Employe 
@@ -132,6 +131,8 @@ PosteTele "*"--"1" Salle : se trouver dans >
 Employe "*"--"1" Salle : se trouver dans >
 MoyenIT "*"--"1" Salle : se trouver dans >
 Machine "*"--"1" Salle : se trouver dans >
+Machine <|- Mach_labo
+Mach_fabr --|> Machine
 Salle --* "1..*" Etage
 Etage -* "1..*" Batiment
 @enduml
