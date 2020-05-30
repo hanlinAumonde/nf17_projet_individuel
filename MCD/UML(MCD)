@@ -1,24 +1,22 @@
 @startuml
 class Organisation <<abstract>>{
+  sigle : string {key}
   nom : string
 }
 
 class Laboratoire{
-  sigleL : string {key}
   directeurL : Employe
   logo : image
   thmatique_etude : text
 }
 
 class Projet{
-  sigleP : string {key}
   date_start : date
   date_end : date
   description : text
 }
 
 class Departement{
-  sigleD : string {key}
   directeurD : Employe
   domaine : text
 }
