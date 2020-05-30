@@ -78,7 +78,6 @@ class gaz <<datatype>>{
 }
 
 
-
 class Salle{
   nomS : string {key}
   superficieS : int
@@ -115,11 +114,11 @@ class RessouceProjet_IT{
   {method} bool droit_chef_IT
 }
 
+
 Organisation <|-- Laboratoire
 Organisation <|-- Projet
 Organisation <|-- Departement
-Laboratoire "1"-"*" Projet : possede >
-Projet "*"-"1" Departement : possede <
+Organisation "1"--"*" Machine : utilise >
 Laboratoire "0..1"--"*" Employe : etre membre de <
 Laboratoire "0..1"--"1" Employe : etre directeur de <
 Projet " "--" " Employe 
