@@ -122,9 +122,9 @@ Laboratoire "1"-"*" Projet : possede >
 Projet "*"-"1" Departement : possede <
 Laboratoire "0..1"--"*" Employe : etre membre de <
 Laboratoire "0..1"--"1" Employe : etre directeur de <
-Projet ""--"" Employe 
+Projet " "--" " Employe 
 (Projet , Employe) . RHprojet
-Projet ""--"" MoyenIT 
+Projet " "--" " MoyenIT 
 (Projet , MoyenIT) . RessouceProjet_IT
 Departement "0..1"--"*" Employe : etre membre de <
 Departement "0..1"--"1" Employe : etre directeur de <
