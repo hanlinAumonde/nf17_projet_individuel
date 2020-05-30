@@ -5,6 +5,7 @@ class Organisation <<abstract>>{
 
 class Laboratoire{
   sigleL : string {key}
+  directeurL : Employe
   logo : image
   thmatique_etude : text
 }
@@ -18,6 +19,7 @@ class Projet{
 
 class Departement{
   sigleD : string {key}
+  directeurD : Employe
   domaine : text
 }
 
@@ -102,15 +104,6 @@ class Batiment{
   nbEtage : int
 }
 
-class RHlabo{
-  directeur : bool
-  {method} bool droit_direc
-}
-
-class RHdepartement{
-  directeur : bool
-  {method} bool droit_direc
-}
 
 class RHprojet{
   chef : bool
@@ -118,18 +111,23 @@ class RHprojet{
   {method} bool droit_chef
 }
 
+class RessouceProjet_IT{
+  {method} bool droit_chef_IT
+}
+
 Organisation <|-- Laboratoire
 Organisation <|-- Projet
 Organisation <|-- Departement
 Laboratoire "1"-"*" Projet : possede >
 Projet "*"-"1" Departement : possede <
-Laboratoire "1"--"*" Employe 
-(Laboratoire , Employe) . RHlabo
-Projet "1"--"*" Employe 
+Laboratoire "0..1"--"*" Employe : etre membre de <
+Laboratoire "0..1"--"1" Employe : etre directeur de <
+Projet ""--"" Employe 
 (Projet , Employe) . RHprojet
-Projet "1"--"*" MoyenIT : utiliser >
-Departement "1"--"*" Employe 
-(Departement , Employe) . RHdepartement
+Projet ""--"" MoyenIT 
+(Projet , MoyenIT) . RessouceProjet_IT
+Departement "0..1"--"*" Employe : etre membre de <
+Departement "0..1"--"1" Employe : etre directeur de <
 PosteTele "1"-"0..1" Employe : possede <
 Employe "0..1"-"*" MoyenIT : etre responsable de >
 MoyenIT "*"-"0..1" Machine : etre lié à >
