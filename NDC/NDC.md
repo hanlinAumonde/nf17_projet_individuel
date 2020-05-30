@@ -36,16 +36,16 @@ Rq :
 * On fait le gestion des images au niveaux application
 
 ## Choix des associations :
-* Un laboratoire / département possede plusieurs projets
-* Pour gérer les relation hiérarchiques entre les employés, on crée les classes d'association entre la classe employe et les organisations:
-  * __RHlabo__
-  * __RHdepartement__
+* Un laboratoire / département __possede__ plusieurs projets
+* Un employé peut __etre un directeur/membre__ d'un laboratoire ou un departement(c'est aussi possible d'etre directeur  )
+* Pour gérer les relation hiérarchiques entre les employés, on crée le classe d'association entre la classe employe et les projets:
   * __RHprojet__
-* Plusieurs employees , machines , moyens informatiques , postes telephoniques peuvent se trouver dans un salle
-* Un projet peut utiliser plusieurs moyens informatiques
-* Un employé peut posséder un poste téléphonique ou non
-* Un moyen informatique peut être responsable par un employé
-* Un moyen informatique peut être lié a une machine
+* Plusieurs employees , machines , moyens informatiques , postes telephoniques peuvent __se trouver dans__ un salle
+* Un projet peut utiliser plusieurs moyens informatiques,et un moyen informatique peut etre untilisé par plusieurs projets(pas en meme temps)
+  * __RessouceProjet_IT__
+* Un employé peut __posséder__ un poste téléphonique ou non
+* Un moyen informatique peut __être responsable__ par un employé
+* Un moyen informatique peut __être lié__ a une machine
 
 ## Contraintes entre les objets et les propriétés :
 * Chaque salle est situé dans un seul étage
