@@ -17,7 +17,6 @@
 
 --Les objets qui peuvent se trouver dans les salles :
   
-  //-----On utilise l'heritage par mere ici comme il n'y a pas d'association et les autres attributs sur les files de la classe 'Machine'-----//
   -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
   
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
@@ -35,39 +34,80 @@
                 
 --Les organisations :
   
-  -
+  -Organisation(#sigle : string , nom : string)
   
-  //----C'est le cas d'héritage non complet avec classe mère abstraite (sans association ni clé au niveau de la classe mère),
-        donc on choisit un héritage par les classes filles.  
-        Ici , la classe Organisation est une classe mère abstraite avec aucune clé et l'association-----//
-        
-  -Laboratoire(#sigle : string , nom : string , logo : image , thmatique_etude : text)
+  -Laboratoire(#sigle => Organisation , logo : image , thmatique_etude : text)
   
-  -Departement(#sigle : string , nom : string , domaine : text)
+  -Departement(#sigle => Organisation , domaine : text)
   
-  -Projet(#sigle : string , nom : string , description : text , date_start : date , date_end : date)
+  -Projet(#sigle => Organisation , description : text , date_start : date , date_end : date)
   
- Contraintes:  
-              
-               
-
+  Contraintes : Intersection(Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = {}
+                Union((Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = Projection(Organisation,sigle)
+  
+ 
 --Les relations entre les organisations et les employés : 
 
   --Entre les laboratoires et les employés :
-    -RHlabo(#Labo => Laboratoire(sigleL) , #EmployeL => Employe(numBadge) , directeurL : boolean)
+    Un employé peut etre un directeur d'un laboratoire (ou non), donc on ajout un attribut 'directeur' dans la class Laboratoire
+    -Laboratoire(#sigle => Organisation , logo : image , #directeur => Employe , thmatique_etude : text)
     
-    Rq : La methode droite_direcL permet aux directeurs des laboratoires de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
+    Rq : Les directeurs des laboratoires ont le droit de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
     
   --Entre les departements et les employés :
-    -RHdepartement(#dep => Departement(sigleD) , #EmployeD => Employe(numBadge) , directeurD : boolean)
+    Un employé peut etre un directeur d'un departement (ou non), donc on ajout un attribut 'directeur' dans la class Departement
+    -Departement(#sigle => Organisation , #directeur => Employe , domaine : text)
     
-    Rq : La methode droite_direcD permet aux directeurs des departements de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
+    Rq : Les directeurs des departements ont le droit de choisir leurs membres et les acteurs des projets(mis au niveau applicatif)
     
   --Entre les projets et les employés :
     -RHprojet(#proj => Projet(sigleP) , #EmployeP => Employe(numBadge) , chef : boolean , role : string)
     
     Rq : La methode droite_chef permet de definir les roles des acteurs(mis au niveau applicatif)
     
-  Contraintes : Projection(RHlabo,Labo) = Projection(Laboratoire,sigleL) AND Projjection(RHlabo,EmployeL) = Projection(Employe,numBadge)
-                Projection(RHdepartement,dep) = Projection(Departement,sigleD) AND Projjection(RHdepartement,EmployeD) = Projection(Employe,numBadge)
-                Projection(RHprojet,proj) = Projection(Projet,sigleP) AND Projjection(RHprojet,EmployeP) = Projection(Employe,numBadge)
+  --Globalement , pour verifier qu'un employé appartient a quel labo/dep(l'association 'etre membre de') , on ajout deux attributs 'empl_labo' , 'empl_depa' correspond a les sigles
+    Au moins un de ces deux attributs n'est pas nul.
+  -Employe(#numBadge : int , #salleEmploye => Salle , nom : string , prenom : string , e-mail : string , statut : {CDI,CDD,stagiaire} , #empl_labp => Laboratoire , #empl_depa => Departement , emplacement : text)
+    
+  Contraintes : Projection(Laboratoire,directeur) = Projection(Employe,numBadge)
+                Projection(Departement,directeur) = Projection(Employe,numBadge)
+                Projection(RHprojet,proj) = Projection(Projet,sigleP) AND Projection(RHprojet,EmployeP) = Projection(Employe,numBadge)
+                ( 
+                  (Projection(Employe,empl_labo) = Projection(Laboratoire,sigle) AND Projection(Employe,empl_depa) = Projection(Departement,sigle)) OR
+                  (Projection(Employe,empl_labo) = Projection(Laboratoire,sigle) AND Projection(Employe,empl_depa) = {}) OR
+                  (Projection(Employe,empl_depa) = Projection(Departement,sigle) AND Projection(Employe,empl_labo) = {})
+                )
+                
+
+--Les relations entre les projets et les moyens informatiques
+
+  -RessouceProjet_IT(#Proj => Projet(sigle) , #util_debut => Projet(date_start) , #util_fin => Projet(date_end) , #moyen => MoyenIT(nomIT))
+  
+  Contraintes : Projection(Projet,sigle) = Projection(RessouceProjet_IT,Proj)
+                AND 
+                Projection(RessouceProjet_IT,moyen) = Projection(MoyenIT,nomIT)
+                AND
+                Projection(Projet,date_start) = Projection(RessouceProjet_IT,util_debut)
+                AND
+                Projection(Projet,date_end) = Projection(RessouceProjet_IT,util_fin)
+
+
+--Choix des heritages :  
+  (1)
+        //----C'est le cas d'héritage non complet avec classe mère abstraite 
+        on choisit un héritage par les classes filles  
+        Ici , la classe Organisation est une classe mère abstraite avec aucune de l'association-----//
+        
+  -Laboratoire(#sigle : string , nom : string , #directeur => Employe , logo : image , thmatique_etude : text)
+  
+  -Departement(#sigle : string , nom : string , #directeur => Employe , domaine : text)
+  
+  -Projet(#sigle : string , nom : string , description : text , date_start : date , date_end : date)
+  
+  Contraintes :  Intersection(Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = {}
+  
+  (2)
+        //-----On utilise l'heritage par mere ici comme il n'y a pas d'association et les autres attributs sur les files de la classe 'Machine'-----//
+  -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
+
+  Contrainte : type = {Mach_labo} OR type = {Mach_depa}
