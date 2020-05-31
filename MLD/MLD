@@ -1,30 +1,39 @@
 --Batiments :
 
-  -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int)
+  -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int) avec nomB unique,not nul, superficieB not nul, addrGPS unique,not nul
 
 --Dans les batiments :
   
-  -Etage(#nomBat => Batiment , #numEtage : int , planEtage : image)
+  -Etage(#nomBat => Batiment , #numEtage : int , planEtage : image) avec planEtage unique , (nomBat , numEtage) key
  
-  -Salle(#numE => Etage , #nomS : string , superficieS : int , capaciteHumMax : int , planSalle : image , airComprime : boolean , elecTriphase : boolean , nbPriseElec : int , nbPriseResaux : int)
+  -Salle(#numE => Etage , #Bati => Batiment , #nomS : string , superficieS : int , capaciteHumMax : int , planSalle : image , airComprime : boolean , elecTriphase : boolean , nbPriseElec : int , nbPriseResaux : int)
+   avec superficieS not nul, capaciteHumMax noy nul , planSalle unique , nbPriseElec not nul , nbPriseResaux not nul , (numE,Bati,nomS) key
+   
      *Attention,il y a des normalisation ici sur les salles :
+     
        -PhotoSalle(#nom_Salle => Salle , #photos : image)
        -GazSpecifique(#nomSalle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
   
   Contraintes :  Projection(Batiment,nomB) = Projection(Etage,nomBat)
                  Projection(Etage,numEtage) = Projection(Salle,numE)
+                 Projection(Salle,Bati) = Projection(Batiment,nomB)
 
 
 --Les objets qui peuvent se trouver dans les salles :
   
   -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
-  
+   codeMach unique,not nul , sallemach unique,not nul , puissanceElec not nul, NCM unique,not nul , EM not nul , taille not nul
+   
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
+   nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur}
+   
       *Normalisation: AddressMoyenIT(#mIT => MoyenIT , #addr : string)
   
-  -PosteTele(#nuInt : int , nuExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
+  -PosteTele(#numInt : int , numExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
+   numInt unique,not nul , marque not nul , salletele unique,nou nul , typeTele={VOIP} OR typeTele={TOIP} OR typeTele={Landlind}
  
   -Employe(#numBadge : int , #salleEmploye => Salle , nom : string , prenom : string , e-mail : string , statut : {CDI,CDD,stagiaire} , emplacement : text)
+   numBadge unique,not nul , salleEmploye unique,not nul , nom nou nul , prenom not nul , e-mail not nul , statut={CDI} OR statut={CDD} OR statut={stagiaire}
 
   Contraintes : Projection(Salle,nomS) = Proection(Machine,salleMach) AND Projection(Salle,nomS) = Proection(MoyenIT,salleIT) AND Projection(Salle,nomS) = Proection(PosteTele,salletele) AND Projection(Salle,nomS) = Proection(Employe,salleEmploye)
                 Projection(PosteTele,host) = Projection(Employe,numBadge) OR Projection(PosteTele,host) = {}
@@ -34,13 +43,13 @@
                 
 --Les organisations :
   
-  -Organisation(#sigle : string , nom : string)
+  -Organisation(#sigle : string , nom : string) avec sigle unique,not nul , nom not nul
   
-  -Laboratoire(#sigle => Organisation , logo : image , thmatique_etude : text)
+  -Laboratoire(#sigle => Organisation , logo : image , thmatique_etude : text) avec thmatique_etude not nul
   
-  -Departement(#sigle => Organisation , domaine : text)
+  -Departement(#sigle => Organisation , domaine : text) avec domaine not nul
   
-  -Projet(#sigle => Organisation , description : text , date_start : date , date_end : date)
+  -Projet(#sigle => Organisation , description : text , date_start : date , date_end : date) description not nul
   
   Contraintes : Intersection(Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = {}
                 Union((Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = Projection(Organisation,sigle)
