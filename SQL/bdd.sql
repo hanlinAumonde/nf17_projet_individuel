@@ -23,3 +23,6 @@ CREATE TYPE gaz AS ENUM ('Butane','methane','oxygene','azote','hydrogene','heliu
 
 -- Creation des tables
 
+CREATE TABLE Batiment(
+    nomB VARCHAR PRIMARY KEY,
+);
