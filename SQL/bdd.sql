@@ -135,7 +135,7 @@ CREATE TABLE Organisation(
 CREATE TABLE Laboratoire(
     sigle VARCHAR(6) PRIMARY KEY,
     nom VARCHAR NOT NULL,
-    directeur INT NOT NULL,
+    directeur VARCHAR UNIQUE,
     logo IMAGE,
     thmatique_etude TEXT NOT NULL,
     FOREIGN KEY(sigle,nom) REFERENCES Organisation(sigle,nom),
@@ -145,7 +145,7 @@ CREATE TABLE Laboratoire(
 CREATE TABLE Departement(
     sigle VARCHAR(6) PRIMARY KEY,
     nom VARCHAR NOT NULL,
-    directeur INT NOT NULL,
+    directeur VARCHAR UNIQUE,
     domaine TEXT NOT NULL,
     FOREIGN KEY(sigle,nom) REFERENCES Organisation(sigle,nom),
     FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
