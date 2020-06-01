@@ -11,18 +11,22 @@
    
      *Attention,il y a des normalisation ici sur les salles :
      
-       -PhotoSalle(#nom_Salle => Salle , #photos : image)
-       -GazSpecifique(#nomSalle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
+       -PhotoSalle(#nom_salle => Salle , #photos : image)
+       -GazSpecifique(#nom_Salle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
   
   Contraintes :  Projection(Batiment,nomB) = Projection(Etage,nomBat)
                  Projection(Etage,numEtage) = Projection(Salle,numE)
                  Projection(Salle,Bati) = Projection(Batiment,nomB)
+                 Projection(PhotoSalle,nom_salle) = Projection(Salle,nomS)
+                 Projection(GazSpecifique,nom_Salle) = Projection(Salle,nomS)
 
 
 --Les objets qui peuvent se trouver dans les salles :
   
-  -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
-   codeMach unique,not nul , sallemach unique,not nul , puissanceElec not nul, NCM unique,not nul , EM not nul , taille not nul
+  -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , #NCM => Num_Entreprise_Mach(NumCM) , taille : int)
+   codeMach unique,not nul , sallemach unique,not nul , puissanceElec not nul, NCM unique,not nul , taille not nul
+      
+      *Normalisation: Num_Entreprise_Mach(#NumCM : int , EM : string) parce que NCN peut deteminer EM
    
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
    nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur}
@@ -39,6 +43,8 @@
                 Projection(PosteTele,host) = Projection(Employe,numBadge) OR Projection(PosteTele,host) = {}
                 Projection(MoyenIT,resp) = Projection(Employe,numBadge) OR Projection(MoyenIT,resp) = {}
                 Projection(MoyenIT,MachineLie) = Projection(Machine,codeMach) OR Projection(MoyenIT,MachineLie) = {}
+                Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
+                Projection(MoyenIT,nomIT) = Projection(AddressMoyenIT,mIT)
 
                 
 --Les organisations :
@@ -120,3 +126,9 @@
   -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , NCM : int , EM : string , taille : int)
 
   Contrainte : type = {Mach_labo} OR type = {Mach_depa}
+
+
+L'ensemble est 3NF car   
+- attributs atomiques (1NF);  
+- pas de parties de clé qui pourraient induire des attributs non clés (2NF);  
+- pas d'attributs non clé qui permettent de trouver d'autres attributs non clés.  
