@@ -27,8 +27,7 @@ CREATE TABLE Batiment(
     nomB VARCHAR PRIMARY KEY,
     superficieB INT NOT NULL,
     addrGPS_lat VARCHAR(15) UNIQUE NOT NULL,
-    addrGPS_lng VARCHAR(15) UNIQUE NOT NULL,
-    nbEtage INT NOT NULL
+    addrGPS_lng VARCHAR(15) UNIQUE NOT NULL
 );
 
 CREATE TABLE Etage(
