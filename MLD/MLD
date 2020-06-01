@@ -96,15 +96,12 @@
 
 --Les relations entre les projets et les moyens informatiques
 
-  -RessouceProjet_IT(#Proj => Projet(sigle) , #util_debut => Projet(date_start) , #util_fin => Projet(date_end) , #moyen => MoyenIT(nomIT))
+  -RessouceProjet_IT(#Proj => Projet(sigle) , #moyen => MoyenIT(nomIT))
   
   Contraintes : Projection(Projet,sigle) = Projection(RessouceProjet_IT,Proj)
                 AND 
                 Projection(RessouceProjet_IT,moyen) = Projection(MoyenIT,nomIT)
                 AND
-                Projection(Projet,date_start) = Projection(RessouceProjet_IT,util_debut)
-                AND
-                Projection(Projet,date_end) = Projection(RessouceProjet_IT,util_fin)
 
 
 --Choix des heritages :  
