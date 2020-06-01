@@ -26,7 +26,8 @@ CREATE TYPE gaz AS ENUM ('Butane','methane','oxygene','azote','hydrogene','heliu
 CREATE TABLE Batiment(
     nomB VARCHAR PRIMARY KEY,
     superficieB INT NOT NULL,
-    addrGPS VARCHAR(15) UNIQUE NOT NULL,
+    addrGPS_lat VARCHAR(15) UNIQUE NOT NULL,
+    addrGPS_lng VARCHAR(15) UNIQUE NOT NULL,
     nbEtage INT NOT NULL
 );
 
