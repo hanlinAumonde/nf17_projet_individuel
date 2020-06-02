@@ -2,9 +2,10 @@
 
 -- Insertion des batiments :
 
-INSERT INTO Batiment VALUES('Siège social de la société umbrella','5000'，'38.587040','-98.304525');
-INSERT INTO Batiment VALUES('Centre de recherche médicale','15000'，'36.597641','-99.409520');
-INSERT INTO Batiment VALUES('Centre de production cosmétique','15500'，'38.812040','-101.39037');
+INSERT INTO Batiment VALUES('Siège social de la société umbrella','5000','38.587040','-98.304525');
+INSERT INTO Batiment VALUES('Centre de recherche médicale','15000','36.597641','-99.409520');
+INSERT INTO Batiment VALUES('Centre de production cosmétique','15500','38.812040','-101.39037');
+
 
 -- Insertion des etages :
 
