@@ -64,7 +64,7 @@ CREATE TABLE Salle(
 CREATE TABLE PhotoSalle(
     nom_salle VARCHAR REFERENCES Salle(nomS),
     photos VARCHAR,
-    PRIMARY KEY(nom_salle,photos)
+    PRIMARY KEY(nom_salle)
 );
 
 CREATE TABLE GazSpecifique(
@@ -74,7 +74,7 @@ CREATE TABLE GazSpecifique(
 );
 
 CREATE TABLE Num_Entreprise_Mach(
-    NumCM INT PRIMARY KEY,
+    NumCM VARCHAR PRIMARY KEY,
     EentrepriseMach VARCHAR NOT NULL
 );
 
@@ -89,7 +89,7 @@ CREATE TABLE Machine(
     besoinResaux verifier NOT NULL,
     besoinGaz gaz,
     taille INT NOT NULL,
-    NCM INT,
+    NCM VARCHAR,
     FOREIGN KEY(sallemach) REFERENCES Salle(nomS),
     FOREIGN KEY(NCM) REFERENCES Num_Entreprise_Mach(NumCM)
 );
@@ -100,7 +100,7 @@ CREATE TABLE Organisation(
 );
 
 CREATE TABLE Employe(
-    numBadge INT PRIMARY KEY,
+    numBadge VARCHAR(8) PRIMARY KEY,
     salleEmploye VARCHAR NOT NULL,
     nom VARCHAR NOT NULL,
     prenom VARCHAR NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE Employe(
 CREATE TABLE Laboratoire(
     sigle VARCHAR(6) PRIMARY KEY,
     nom VARCHAR NOT NULL,
-    directeur INT UNIQUE,
+    directeur VARCHAR(8) UNIQUE,
     logo VARCHAR,
     thmatique_etude TEXT NOT NULL,
     FOREIGN KEY(sigle) REFERENCES Organisation(sigle),
@@ -126,7 +126,7 @@ CREATE TABLE Laboratoire(
 CREATE TABLE Departement(
     sigle VARCHAR(6) PRIMARY KEY,
     nom VARCHAR NOT NULL,
-    directeur INT UNIQUE,
+    directeur VARCHAR(8) UNIQUE,
     domaine TEXT NOT NULL,
     FOREIGN KEY(sigle) REFERENCES Organisation(sigle),
     FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
@@ -141,7 +141,7 @@ CREATE TABLE MoyenIT(
     nomIT VARCHAR PRIMARY KEY,
     salleIT VARCHAR NOT NULL,
     MachineLie VARCHAR,
-    resp INT,
+    resp VARCHAR(8),
     typeIT typeit NOT NULL,
     OS VARCHAR NOT NULL,
     FOREIGN KEY(salleIT) REFERENCES Salle(nomS),
@@ -159,7 +159,7 @@ CREATE TABLE PosteTele(
     numInt INT PRIMARY KEY,
     numExt INT,
     salletele VARCHAR NOT NULL,
-    hostID INT NOT NULL, 
+    hostID VARCHAR(8), 
     typeTele typetele NOT NULL,
     modeleTele VARCHAR,
     marque TEXT NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE Projet(
 
 CREATE TABLE RHprojet(
     proj VARCHAR(6),
-    EmployeP INT,
+    EmployeP VARCHAR(8),
     chef verifier NOT NULL,
     role TEXT,
     FOREIGN KEY(proj) REFERENCES Projet(sigle),
