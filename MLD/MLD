@@ -19,7 +19,7 @@
                  Projection(Salle,Bati) = Projection(Batiment,nomB)
                  Projection(PhotoSalle,nom_salle) = Projection(Salle,nomS)
                  Projection(GazSpecifique,nom_Salle) = Projection(Salle,nomS)
-
+  !ATTENTION : Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle.(mis dans vueContrinte.sql)
 
 --Les objets qui peuvent se trouver dans les salles :
   
