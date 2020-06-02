@@ -112,7 +112,7 @@ CREATE TABLE MoyenIT(
     OS VARCHAR NOT NULL,
     FOREIGN KEY(salleIT) REFERENCES Salle(nomS),
     FOREIGN KEY(MachineLie) REFERENCES Machine(codeMach),
-    FOREIGN KEY(RESP) REFERENCES Employe(numBadge)
+    FOREIGN KEY(resp) REFERENCES Employe(numBadge)
 );
 
 CREATE TABLE PosteTele(
