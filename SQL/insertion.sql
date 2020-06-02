@@ -22,6 +22,7 @@ INSERT INTO Etage(nomBat,numEtage) VALUES('Centre de recherche médicale','3');
 INSERT INTO Etage(nomBat,numEtage) VALUES('Centre de production cosmétique','1');
 INSERT INTO Etage(nomBat,numEtage) VALUES('Centre de production cosmétique','2');
 
+
 -- Insertion des salles :
 
 INSERT INTO Salle(nomS,Bati,numE,superficieS,capaciteHumMax,airComprime,elecTriphase,nbPriseElec,nbPriseResaux) VALUES('aaa0000','Siège social de la société umbrella','1','120','15','1','1','5','2');
@@ -44,7 +45,7 @@ INSERT INTO Salle(nomS,Bati,numE,superficieS,capaciteHumMax,airComprime,elecTrip
 INSERT INTO Salle(nomS,Bati,numE,superficieS,capaciteHumMax,airComprime,elecTriphase,nbPriseElec,nbPriseResaux) VALUES('abw0031','Centre de recherche médicale','3','95','7','0','1','4','1');
   
    INSERT INTO GazSpecifique VALUES('abw0004','oxygene');
-   INSERT INTO GazSpecifique VALUES('abe0004','hydrogene');
+   INSERT INTO GazSpecifique VALUES('abw0004','hydrogene');
    INSERT INTO GazSpecifique VALUES('abw0023','methane');
    INSERT INTO GazSpecifique VALUES('abw0031','Butane');
    INSERT INTO GazSpecifique VALUES('abw0031','methane');
@@ -56,34 +57,39 @@ INSERT INTO Salle(nomS,Bati,numE,superficieS,capaciteHumMax,airComprime,elecTrip
 
    INSERT INTO GazSpecifique VALUES('bay0002','azote');
    INSERT INTO GazSpecifique VALUES('bay0011','oxygene');
-
+   
 -- Insertion des organisations :
 
-INSERT INTO Organisation VALUES('LC','Laboratoire de chimie');
-INSERT INTO Organisation VALUES('CCE','Centre de contrôle expérimental');
-INSERT INTO Organisation VALUES('LS1','Laboratoire de soufflerie n°1');
-INSERT INTO Organisation VALUES('LS2','Laboratoire de soufflerie n°2');
-INSERT INTO Organisation VALUES('DRMC','Département de recherche de marché des cosmétiques');
-INSERT INTO Organisation VALUES('DDNP','Département de développement de nouveaux produits');
-INSERT INTO Organisation VALUES('SIQ','Services d inspection de la qualité');
-INSERT INTO Organisation VALUES('LVS','Laboratoire de virus spécifique');
-INSERT INTO Organisation VALUES('IEQNP','Inspection et évaluation de la qualité des nouveaux produits');
-INSERT INTO Organisation VALUES('EMMPR','Enquêter sur les marques de maquillage populaires récemment');
-INSERT INTO Organisation VALUES('DNCV','Développement d un nouveau vaccin contre le coronavirus');
+INSERT INTO Organisation VALUES('LC');
+INSERT INTO Organisation VALUES('CCE');
+INSERT INTO Organisation VALUES('LS1');
+INSERT INTO Organisation VALUES('LS2');
+INSERT INTO Organisation VALUES('DRMC');
+INSERT INTO Organisation VALUES('DDNP');
+INSERT INTO Organisation VALUES('SIQ');
+INSERT INTO Organisation VALUES('LVS');
+INSERT INTO Organisation VALUES('IEQNP');
+INSERT INTO Organisation VALUES('EMMPR');
+INSERT INTO Organisation VALUES('DNCV');
 
 INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LC','Laboratoire de chimie','chimie');
-INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LS1','Laboratoire de soufflerie n°1');
-INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LS2','Laboratoire de soufflerie n°2');
-INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LVS','Laboratoire de virus spécifique');
+INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LS1','Laboratoire de soufflerie n°1','www');
+INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LS2','Laboratoire de soufflerie n°2','rrrr');
+INSERT INTO Laboratoire(sigle,nom,thmatique_etude) VALUES('LVS','Laboratoire de virus spécifique','dstthe');
+
 
 INSERT INTO Departement(sigle,nom,domaine) VALUES('CCE','Centre de contrôle expérimental','IT_controle');
 INSERT INTO Departement(sigle,nom,domaine) VALUES('DRMC','Département de recherche de marché des cosmétiques','etude_marche');
 INSERT INTO Departement(sigle,nom,domaine) VALUES('DDNP','Département de développement de nouveaux produits','production');
 INSERT INTO Departement(sigle,nom,domaine) VALUES('SIQ','Services d inspection de la qualité','sondage');
 
+
+
+
 INSERT INTO Projet VALUES('IEQNP','Inspection et évaluation de la qualité des nouveaux produits','Prélevez un certain échantillon pour une évaluation globale','2020-05-01','2020-05-31');
 INSERT INTO Projet VALUES('EMMPR','Enquêter sur les marques de maquillage populaires récemment','Décider de la direction de production du produit en fonction des résultats de l enquête','2020-03-03','2020-04-01');
 INSERT INTO Projet VALUES('DNCV','Développement d un nouveau vaccin contre le coronavirus','Le développement des vaccins doit se poursuivre le plus tôt possible','2020-01-25',NULL);
+
 
 -- Insertion des employes:
 
@@ -93,22 +99,22 @@ INSERT INTO Employe VALUES('bh2019qz','abw0004','John','Jastin','789J_J@gmail.co
 INSERT INTO Employe VALUES('ad0401ez','abw0023','Peter','Aiden','peter111@domains.com','CDD','tab_labo_01','LVS','DDNP');
 INSERT INTO Employe VALUES('as1900oz','bay0000','Mark','Ryan','Mryan@gmail.com','CDI','bureau_01',NULL,'SIQ');
 INSERT INTO Employe VALUES('ca9000ep','bay0002','Mike','Ethan','Methan@gmail.com','stagiaire','bureau_01',NULL,'SIQ');
-INSERT INTO Employe VALUES('cv1102qw','abw0023','Jade','William','Jwilliam@gmail.com','CDI','labo_02','LSV','CCE');
+INSERT INTO Employe VALUES('cv1102qw','abw0023','Jade','William','Jwilliam@gmail.com','CDI','labo_02','LVS','CCE');
 INSERT INTO Employe VALUES('jk1034gh','bay0011','Bob','Kevin','Bkevin@hotmail.com','CDD','bureau_a01','LC',NULL);
 
 -- Insertion des machines :
-
-INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('IMP1-1','Mach_fabr','aaa0001','impfichier','80','0','1',NULL,'12','#wg1208');
-INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('ACR2-1','Mach_labo','abw0031','air_test','200','1','0','oxygene','30','#ad5012');
-INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('SDR2-2','Mach_fabr','abw0004','synthèse de réactifs','500','1','1',NULL,'50','#sf1007');
-INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('MCE2-1','Mach_labo','abw0023','Microscope électronique','100','1','1',NULL,'20','#me2137');
-INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('MEM1-2','Mach_fabr','bay0011','Machine d embouteillage','200','1','0',NULL,'30','#em8113');
 
    INSERT INTO Num_Entreprise_Mach VALUES('#wg1208','BPIfrance');
    INSERT INTO Num_Entreprise_Mach VALUES('#ad5012','Fluke');
    INSERT INTO Num_Entreprise_Mach VALUES('#sf1007','MECATHEIL');
    INSERT INTO Num_Entreprise_Mach VALUES('#me2137','Fluke');
    INSERT INTO Num_Entreprise_Mach VALUES('#em8113','MECATHEIL');
+
+INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('IMP1-1','Mach_fabr','aaa0001','impfichier','80','0','1',NULL,'12','#wg1208');
+INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('ACR2-1','Mach_labo','abw0031','air_test','200','1','0','oxygene','30','#ad5012');
+INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('SDR2-2','Mach_fabr','abw0004','synthèse de réactifs','500','1','1',NULL,'50','#sf1007');
+INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('MCE2-1','Mach_labo','abw0023','Microscope électronique','100','1','1',NULL,'20','#me2137');
+INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTriphase,besoinResaux,besoinGaz,taille,NCM) VALUES('MEM1-2','Mach_fabr','bay0011','Machine d embouteillage','200','1','0',NULL,'30','#em8113');
 
 -- Insertion des moyens informatiques :
 
@@ -126,6 +132,7 @@ INSERT INTO MoyenIT VALUES('por2015','bay0000',NULL,NULL,'portable','apple');
    INSERT INTO AddressMoyenIT VALUES('pcf1012','2D:FF:36:D2:AE:67');
    INSERT INTO AddressMoyenIT VALUES('por2015','3B:FF:45:C7:AB:26');
 
+
 -- Insertion des postes telephoniques :
 
 INSERT INTO PosteTele(numInt,numExt,salletele,hostID,typeTele,marque) VALUES('100076','3673217','aaa0000',NULL,'VOIP','Consultation à la réception');
@@ -140,6 +147,7 @@ INSERT INTO RHprojet VALUES('IEQNP','ac0120ef','0','Estimateur');
 INSERT INTO RHprojet VALUES('DNCV','jk1034gh','1',NULL);
 INSERT INTO RHprojet VALUES('DNCV','bh2019qz','0','R&D');
 INSERT INTO RHprojet VALUES('DNCV','ad0401ez','0','testing');
+
 
 -- Insertion des relations rntre les projets et les moyens informatiques :
 
