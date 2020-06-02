@@ -31,8 +31,6 @@ CREATE TYPE verifier AS ENUM ('1','0');
 
 -- Creation des tables
 
-
-
 CREATE TABLE Batiment(
     nomB VARCHAR PRIMARY KEY,
     superficieB INT NOT NULL,
@@ -44,14 +42,15 @@ CREATE TABLE Etage(
     nomBat VARCHAR,
     numEtage INT,
     planEtage VARCHAR,
+    UNIQUE (nomBat,numEtage),
     PRIMARY KEY(nomBat,numEtage),
     FOREIGN KEY(nomBat) REFERENCES Batiment(nomB)
 );
 
 CREATE TABLE Salle(
     nomS VARCHAR PRIMARY KEY,
-    Bati VARCHAR,
-    numE INT,
+    Bati VARCHAR NOT NULL,
+    numE INT NOT NULL,
     superficieS INT NOT NULL,
     capaciteHumMax INT NOT NULL,
     planSalle VARCHAR,
@@ -59,8 +58,7 @@ CREATE TABLE Salle(
     elecTriphase verifier NOT NULL,
     nbPriseElec INT NOT NULL,
     nbPriseResaux INT NOT NULL,
-    FOREIGN KEY(Bati) REFERENCES Batiment(nomB),
-    FOREIGN KEY(numE) REFERENCES Etage(numEtage)
+    FOREIGN KEY(numE,Bati) REFERENCES Etage(numEtage,nomBat)
 );
 
 CREATE TABLE PhotoSalle(
