@@ -64,13 +64,13 @@ CREATE TABLE Salle(
 CREATE TABLE PhotoSalle(
     nom_salle VARCHAR REFERENCES Salle(nomS),
     photos VARCHAR,
-    PRIMARY KEY(nom_salle)
+    PRIMARY KEY(nom_salle,photos)
 );
 
 CREATE TABLE GazSpecifique(
     nom_Salle VARCHAR REFERENCES Salle(nomS),
     Gaz gaz,
-    PRIMARY KEY(nom_Salle)
+    PRIMARY KEY(nom_Salle,Gaz)
 );
 
 CREATE TABLE Num_Entreprise_Mach(
