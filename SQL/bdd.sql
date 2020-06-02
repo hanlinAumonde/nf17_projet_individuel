@@ -21,12 +21,17 @@ DROP TABLE IF EXISTS RessouceProjet_IT
 
 -- Creation des types
 
-CREATE TYPE typetele AS ENUM ('VOIP','TOIP','Landline')
-CREATE TYPE etat AS ENUM ('CDI','CDD','stagiaire')
-CREATE TYPE typeit AS ENUM ('PC','portable','serveur')
-CREATE TYPE gaz AS ENUM ('Butane','methane','oxygene','azote','hydrogene','helium')
+CREATE TYPE typetele AS ENUM ('VOIP','TOIP','Landline');
+CREATE TYPE etat AS ENUM ('CDI','CDD','stagiaire');
+CREATE TYPE typeit AS ENUM ('PC','portable','serveur');
+CREATE TYPE gaz AS ENUM ('Butane','methane','oxygene','azote','hydrogene','helium');
+CREATE TYPE verifier AS ENUM ('1','0');
+
+
 
 -- Creation des tables
+
+
 
 CREATE TABLE Batiment(
     nomB VARCHAR PRIMARY KEY,
@@ -37,31 +42,30 @@ CREATE TABLE Batiment(
 
 CREATE TABLE Etage(
     nomBat VARCHAR,
-    numEtage INT,
-    planEtage IMAGE,
-    FOREIGN KEY(nomBat) REFERENCES Batiment(nomB),
-    PRIMARY KEY(nomBat,numEtage)
+    numEtage INT UNIQUE,
+    planEtage VARCHAR,
+    PRIMARY KEY(nomBat,numEtage),
+    FOREIGN KEY(nomBat) REFERENCES Batiment(nomB)
 );
 
 CREATE TABLE Salle(
-    nomS VARCHAR,
-    Bati VARCHAR NOT NULL,
-    numE INT NOT NULL,
+    nomS VARCHAR PRIMARY KEY,
+    Bati VARCHAR,
+    numE INT,
     superficieS INT NOT NULL,
     capaciteHumMax INT NOT NULL,
-    planSalle IMAGE,
-    airComprime BOOL NOT NULL,
-    elecTriphase BOOL NOT NULL,
+    planSalle VARCHAR,
+    airComprime verifier NOT NULL,
+    elecTriphase verifier NOT NULL,
     nbPriseElec INT NOT NULL,
-    nbPriseResaux INT NOT NULL
+    nbPriseResaux INT NOT NULL,
     FOREIGN KEY(Bati) REFERENCES Batiment(nomB),
-    FOREIGN KEY(numE) REFERENCES Etage(numEtage),
-    PRIMARY KEY(nomS)
+    FOREIGN KEY(numE) REFERENCES Etage(numEtage)
 );
 
 CREATE TABLE PhotoSalle(
     nom_salle VARCHAR REFERENCES Salle(nomS),
-    photos IMAGE,
+    photos VARCHAR,
     PRIMARY KEY(nom_salle)
 );
 
@@ -71,15 +75,20 @@ CREATE TABLE GazSpecifique(
     PRIMARY KEY(nom_Salle)
 );
 
+CREATE TABLE Num_Entreprise_Mach(
+    NumCM INT PRIMARY KEY,
+    EentrepriseMach VARCHAR NOT NULL
+);
+
 CREATE TABLE Machine(
     codeMach VARCHAR PRIMARY KEY,
     type VARCHAR NOT NULL CHECK (type = 'Mach_labo' OR type = 'Mach_fabr'),
     sallemach VARCHAR,
-    modeleMach IMAGE,
+    modeleMach VARCHAR,
     description TEXT NOT NULL,
     puissanceElec INT NOT NULL,
-    besoinTriphase BOOL NOT NULL,
-    besoinResaux BOOL NOT NULL,
+    besoinTriphase verifier NOT NULL,
+    besoinResaux verifier NOT NULL,
     besoinGaz gaz,
     taille INT NOT NULL,
     NCM INT,
@@ -87,9 +96,9 @@ CREATE TABLE Machine(
     FOREIGN KEY(NCM) REFERENCES Num_Entreprise_Mach(NumCM)
 );
 
-CREATE TABLE Num_Entreprise_Mach(
-    NumCM INT PRIMARY KEY,
-    EentrepriseMach VARCHAR NOT NULL
+CREATE TABLE Organisation(
+    sigle VARCHAR(6) UNIQUE,
+    PRIMARY KEY(sigle)
 );
 
 CREATE TABLE Employe(
@@ -97,16 +106,38 @@ CREATE TABLE Employe(
     salleEmploye VARCHAR NOT NULL,
     nom VARCHAR NOT NULL,
     prenom VARCHAR NOT NULL,
-    E-mail VARCHAR NOT NULL,
+    E_mail VARCHAR NOT NULL,
     statut etat NOT NULL,
     emplacement TEXT NOT NULL,
     empl_labo VARCHAR(6),
     empl_depa VARCHAR(6),
     FOREIGN KEY(salleEmploye) REFERENCES Salle(nomS),
-    FOREIGN KEY(empl_labo) REFERENCES Laboratoire(sigle),
-    FOREIGN KEY(empl_depa) REFERENCES Departement(sigle),
     CHECK (((empl_labo IS NULL) AND (empl_depa IS NOT NULL)) OR ((empl_labo IS NOT NULL) AND (empl_depa IS NULL)) OR ((empl_labo IS NOT NULL) AND (empl_depa IS NOT NULL)))
 );
+
+CREATE TABLE Laboratoire(
+    sigle VARCHAR(6) PRIMARY KEY,
+    nom VARCHAR NOT NULL,
+    directeur INT UNIQUE,
+    logo VARCHAR,
+    thmatique_etude TEXT NOT NULL,
+    FOREIGN KEY(sigle) REFERENCES Organisation(sigle),
+    FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
+);
+
+CREATE TABLE Departement(
+    sigle VARCHAR(6) PRIMARY KEY,
+    nom VARCHAR NOT NULL,
+    directeur INT UNIQUE,
+    domaine TEXT NOT NULL,
+    FOREIGN KEY(sigle) REFERENCES Organisation(sigle),
+    FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
+);
+
+ALTER TABLE Employe
+    ADD CONSTRAINT fk_employe_labo FOREIGN KEY (empl_labo) REFERENCES Laboratoire (sigle),
+	ADD CONSTRAINT fk_employe_depa FOREIGN KEY (empl_depa) REFERENCES Departement (sigle)
+;
 
 CREATE TABLE MoyenIT(
     nomIT VARCHAR PRIMARY KEY,
@@ -132,35 +163,14 @@ CREATE TABLE PosteTele(
     salletele VARCHAR NOT NULL,
     hostID INT NOT NULL, 
     typeTele typetele NOT NULL,
-    modeleTele IMAGE,
+    modeleTele VARCHAR,
     marque TEXT NOT NULL,
     FOREIGN KEY(salletele) REFERENCES Salle(nomS),
     FOREIGN KEY(hostID) REFERENCES Employe(numBadge)
 );
 
-CREATE TABLE Organisation(
-    sigle VARCHAR(6) PRIMARY KEY,
-    nom VARCHAR
-);
 
-CREATE TABLE Laboratoire(
-    sigle VARCHAR(6) PRIMARY KEY,
-    nom VARCHAR NOT NULL,
-    directeur VARCHAR UNIQUE,
-    logo IMAGE,
-    thmatique_etude TEXT NOT NULL,
-    FOREIGN KEY(sigle,nom) REFERENCES Organisation(sigle,nom),
-    FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
-);
 
-CREATE TABLE Departement(
-    sigle VARCHAR(6) PRIMARY KEY,
-    nom VARCHAR NOT NULL,
-    directeur VARCHAR UNIQUE,
-    domaine TEXT NOT NULL,
-    FOREIGN KEY(sigle,nom) REFERENCES Organisation(sigle,nom),
-    FOREIGN KEY(directeur) REFERENCES Employe(numBadge)
-);
 
 CREATE TABLE Projet(
     sigle VARCHAR(6) PRIMARY KEY,
@@ -168,19 +178,19 @@ CREATE TABLE Projet(
     description TEXT NOT NULL,
     date_start DATE NOT NULL,
     date_end DATE,
-    FOREIGN KEY(sigle,nom) REFERENCES Organisation(sigle,nom),
-    CHECK ((date_end >= date_start) OR date_end IS NULL)
+    FOREIGN KEY(sigle) REFERENCES Organisation(sigle),
+    CHECK ((date_end >= date_start) OR (date_end IS NULL))
 );
 
 CREATE TABLE RHprojet(
     proj VARCHAR(6),
     EmployeP INT,
-    chef BOOL NOT NULL,
+    chef verifier NOT NULL,
     role TEXT,
     FOREIGN KEY(proj) REFERENCES Projet(sigle),
     FOREIGN KEY(EmployeP) REFERENCES Employe(numBadge),
     PRIMARY KEY(proj,EmployeP),
-    CHECK ((chef=1) AND (role IS NULL)) OR ((chef=0) AND (role IS NOT NULL))
+    CHECK (((chef='1') AND (role IS NULL)) OR ((chef='0') AND (role IS NOT NULL)))
 );
 
 CREATE TABLE RessouceProjet_IT(
