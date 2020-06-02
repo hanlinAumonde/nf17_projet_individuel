@@ -42,7 +42,7 @@ CREATE TABLE Batiment(
 
 CREATE TABLE Etage(
     nomBat VARCHAR,
-    numEtage INT UNIQUE,
+    numEtage INT,
     planEtage VARCHAR,
     PRIMARY KEY(nomBat,numEtage),
     FOREIGN KEY(nomBat) REFERENCES Batiment(nomB)
