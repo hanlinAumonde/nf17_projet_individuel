@@ -52,7 +52,7 @@ AND S.nomS='abw0004';
    //*les utilisateurs peuvent choisir le type des objet(au niveau applcatif) pour afficher le vue correspond*//
 
 
--- Afficher les nbs de tous les organisations
+-- Afficher les nbs des employes de tous les organisations
   
   --Les laboratoires:
   
