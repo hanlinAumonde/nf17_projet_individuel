@@ -1,6 +1,6 @@
 -- Afficher tous les etages avec leurs plans d'un batiment
 
-  //*ici,suppose que le batiment est 'Centre de recherche médicale' *//
+  /*ici,suppose que le batiment est 'Centre de recherche médicale' */
 
 CREATE OR REPLACE VIEW vEtagePlan AS
 SELECT E.nomBat , E.numEtage , E.planEtage 
@@ -10,7 +10,7 @@ AND E.nomBat=B.nomB;
 
 -- Afficher tous les salles d'un batiment dans un etage
 
-  //*ici,batiment:'Centre de recherche médicale',numetage='2'*//
+  /*ici,batiment:'Centre de recherche médicale',numetage='2'*/
 
 CREATE OR REPLACE VIEW vEtageSalle AS
 SELECT S.nomB , S.numEtage, S.nomS
@@ -23,7 +23,7 @@ AND E.numEtage=S.numE;
 
 -- Afficher tous les objets d'un salle
    
-   //*ici, salle:'abw0004'*//
+   /*ici, salle:'abw0004'*/
 
 CREATE OR REPLACE VIEW vSalleMach AS
 SELECT  S.nomS , M.codeMach
@@ -49,7 +49,7 @@ FROM Salle S , Employe E
 WHERE S.nomS=E.salleEmploye  
 AND S.nomS='abw0004';
    
-   //*les utilisateurs peuvent choisir le type des objet(au niveau applcatif) pour afficher le vue correspond*//
+   /*les utilisateurs peuvent choisir le type des objet(au niveau applcatif) pour afficher le vue correspond*/
 
 
 -- Afficher les nbs des employes de tous les organisations
