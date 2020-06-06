@@ -61,6 +61,19 @@ Rq :
 * Un chef d'un projet a le droit de définir le role des acteurs
 
 ## Vues pour consulter des données
+* Vue de consultation :
+  * vEtagePlan : Afficher tous les etages avec leurs plans d'un batiment
+  * vEtageSalle : Afficher tous les salles d'un batiment dans un etage
+  * vSalleMach,vSallePost,vSalleMoyen,vSalleEmpl : Afficher tous les objets d'un salle
+  * vNbLabo,vNbDepa :Afficher les nbs des employes de tous les organisations
+* Vue des methodes :
+  * vNb _ RESTE _ empl _salle : assurer que le nombre de personnes dans la salle ne dépasse pas la capacité de la salle*//
+  * vPropMach_Salle : connaitre la proportion d'ordinateurs occupant la salle pour assurer la sécurité des employés*//
+  * vProjet_ En_ Cours, vProjet_Pret : confirmer l'état du projet
+  * vMoyen_ Projet _ Liste,verif_ moyen _dispo : donner une liste des moyenITs disponibles(Utiliser uniquement moyenIT, qui est en charge des membres du projet)
+  * vNB_ Proj _Empl , vEmployeZombie :recherche d'employés sans aucun projet
+  * vNB_ Moyen _Empl : trouver des employés responsables de plusieurs moyensIT
+  
 
 ## Liste des fonctions que les utilisateurs pourront effectués
  * Administrateur système :
