@@ -2,6 +2,9 @@
 
   -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int) avec nomB unique,not nul, superficieB not nul, addrGPS unique,not nul
 
+  Vues:
+  vEtagePlan=();
+  
 --Dans les batiments :
   
   -Etage(#nomBat => Batiment , #numEtage : int , planEtage : image) avec planEtage unique , (nomBat , numEtage) key
@@ -10,6 +13,7 @@
    avec superficieS not nul, capaciteHumMax noy nul , planSalle unique , nbPriseElec not nul , nbPriseResaux not nul , (numE,Bati,nomS) key
    
      *Attention,il y a des normalisation ici sur les salles :
+     (Les deux normalisations suivants sont de type 0NF->1NF car les attributs multivalues,et apres normalisations,ils remplissent les conditions de 3NF)
      
        -PhotoSalle(#nom_salle => Salle , #photos : image)
        -GazSpecifique(#nom_Salle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
@@ -19,19 +23,25 @@
                  Projection(Salle,Bati) = Projection(Batiment,nomB)
                  Projection(PhotoSalle,nom_salle) = Projection(Salle,nomS)
                  Projection(GazSpecifique,nom_Salle) = Projection(Salle,nomS)
-  !ATTENTION : Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle.(mis dans vueContrinte.sql)
+  !ATTENTION : Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle.(mis dans vue_contrinte.sql)
+  
+  Vues:
+  vEtageSalle=()
 
 --Les objets qui peuvent se trouver dans les salles :
   
   -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , #NCM => Num_Entreprise_Mach(NumCM) , taille : int)
    codeMach unique,not nul , sallemach unique,not nul , puissanceElec not nul, NCM unique,not nul , taille not nul
       
-      *Normalisation: Num_Entreprise_Mach(#NumCM : int , EM : string) parce que NCN peut deteminer EM
+      *Normalisation: 
+         Num_Entreprise_Mach(#NumCM : int , EM : string) parce que NCN peut deteminer EM
+      //*Parce que on a le DF NCM->EM,la table Machine est en 2NF,donc on choisit le normalisation 2NF->3NF*//
    
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
    nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur}
    
-      *Normalisation: AddressMoyenIT(#mIT => MoyenIT , #addr : string)
+      *Normalisation: 
+         AddressMoyenIT(#mIT => MoyenIT , #addr : string)//*meme raison comme les normalisations sur le salle*//
   
   -PosteTele(#numInt : int , numExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
    numInt unique,not nul , marque not nul , salletele unique,nou nul , typeTele={VOIP} OR typeTele={TOIP} OR typeTele={Landlind}
@@ -45,7 +55,9 @@
                 Projection(MoyenIT,MachineLie) = Projection(Machine,codeMach) OR Projection(MoyenIT,MachineLie) = {}
                 Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
                 Projection(MoyenIT,nomIT) = Projection(AddressMoyenIT,mIT)
-
+  
+  Vues:
+  vSalleMach=();   vSallePost=();  vSalleMoyen=();  vSalleEmpl=();
                 
 --Les organisations :
   
@@ -60,6 +72,8 @@
   Contraintes : Intersection(Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = {}
                 Union((Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = Projection(Organisation,sigle)
   
+  Vues:
+  vNbLabo=();   vNbDepa=();
  
 --Les relations entre les organisations et les employés : 
 
@@ -123,6 +137,17 @@
   -Machine(#codeMach : string , #sallemach => Salle , type : {Mach_labo , Mach_fabr} , modeleMach : image , description : text , puissanceElec : int , besoinTriphase : boolean , besoinResaux : boolean , besoinGaz : {Butane, méthane, oxygène, azote, hydrogène, hélium} , #NCM => Num_Entreprise_Mach(NumCM), taille : int)
 
   Contrainte : type = {Mach_labo} OR type = {Mach_depa}
+
+VUES METHODES :
+vNb_RESTE_empl_salle=();
+vPropMach_Salle=();
+vProjet_En_Cours=();
+vProjet_Pret=();
+vMoyen_Projet_Liste=();
+verif_moyen_dispo=();
+vNB_Proj_Empl=();
+vEmployeZombie=();
+vNB_Moyen_Empl=();
 
 
 L'ensemble est 3NF car   
