@@ -108,7 +108,6 @@ class Batiment{
 class RHprojet{
   chef : bool
   role : string
-  {method} bool droit_chef
 }
 
 class RessouceProjet_IT{
