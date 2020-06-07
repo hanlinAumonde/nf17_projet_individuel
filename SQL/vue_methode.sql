@@ -31,7 +31,7 @@ FROM Projet
 WHERE date_end IS NOT NULL 
 AND date_end < CURRENT_DATE;
 
--- methode 4 
+-- methode 4 (droit_chef_IT)
 //*cette methode est pour donner une liste des moyenITs disponibles(Utiliser uniquement moyenIT, qui est en charge des membres du projet)*//
 //*on fait le choix de projet au niveau applicatif,ici,on suppose que le projet est 'DNCV'*//
 
