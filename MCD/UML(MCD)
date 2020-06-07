@@ -25,13 +25,13 @@ class Departement{
 class PosteTele{
   numInt : int {key}
   numExt : int
-  typeTele : typetele
+  typeTele : JSON
   modeleTele : image
   marque : text
 }
 
-class typetele <<datatype>>{
-  value:{VOIP,TOIP,Landline}
+class Typetele{
+  value : {VOIP,TOIP,Landline}
 }
 
 class Employe{
@@ -51,7 +51,10 @@ class MoyenIT{
   nomIT : string {key}
   typeIT : typeit
   OS : string
-  addrMAC[0..3] : string
+}
+
+class addrMAC{
+  addr : string
 }
 
 class typeit <<datatype>>{
@@ -128,8 +131,10 @@ PosteTele "1"-"0..1" Employe : possede <
 Employe "0..1"-"*" MoyenIT : etre responsable de >
 MoyenIT "*"-"0..1" Machine : etre lié à >
 PosteTele "*"--"1" Salle : se trouver dans >
+Typetele "1" --* PosteTele
 Employe "*"--"1" Salle : se trouver dans >
 MoyenIT "*"--"1" Salle : se trouver dans >
+addrMAC "0..3" --* MoyenIT
 Machine "*"--"1" Salle : se trouver dans >
 Machine <|- Mach_labo
 Mach_fabr --|> Machine
