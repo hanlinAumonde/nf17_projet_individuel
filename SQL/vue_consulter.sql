@@ -13,7 +13,7 @@ AND E.nomBat=B.nomB;
   /*ici,batiment:'Centre de recherche médicale',numetage='2'*/
 
 CREATE OR REPLACE VIEW vEtageSalle AS
-SELECT S.nomB , S.numEtage, S.nomS
+SELECT S.Bati , S.numE, S.nomS
 FROM  Salle S , Batiment B , Etage E
 WHERE S.Bati='Centre de recherche médicale'
 AND S.numE=2
@@ -39,12 +39,12 @@ AND S.nomS='abw0004';
 
 CREATE OR REPLACE VIEW vSalleMoyen AS
 SELECT S.nomS , M.nomIT
-FROM Salle S , MotenIT M
+FROM Salle S , MoyenIT M
 WHERE S.nomS=M.salleIT 
 AND S.nomS='abw0004';
 
 CREATE OR REPLACE VIEW vSalleEmpl AS
-SELECT S.nomS , E.nomIT
+SELECT S.nomS , E.numBadge , E.nom , E.prenom
 FROM Salle S , Employe E
 WHERE S.nomS=E.salleEmploye  
 AND S.nomS='abw0004';
@@ -57,15 +57,15 @@ AND S.nomS='abw0004';
   --Les laboratoires:
   
     CREATE OR REPLACE VIEW vNbLabo AS
-    SELECT O.sigle , COUNT(E.numBadge)
+    SELECT O.sigle , COUNT(E.numBadge) AS nb_empl
     FROM Organisation O , Employe E
     WHERE O.sigle=E.empl_labo
-    GROUP BY E.empl_labo;
+    GROUP BY O.sigle;
     
   --Les departements:
   
     CREATE OR REPLACE VIEW vNbDepa AS
-    SELECT O.sigle , COUNT(E.numBadge)
+    SELECT O.sigle , COUNT(E.numBadge) AS nb_empl
     FROM Organisation O , Employe E
     WHERE O.sigle=E.empl_depa
-    GROUP BY E.empl_depa;
+    GROUP BY O.sigle;
