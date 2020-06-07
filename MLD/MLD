@@ -37,14 +37,11 @@
          Num_Entreprise_Mach(#NumCM : int , EM : string) parce que NCN peut deteminer EM
       //*Parce que on a le DF NCM->EM,la table Machine est en 2NF,donc on choisit le normalisation 2NF->3NF*//
    
-  -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string)
-   nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur}
-   
-      *Normalisation: 
-         AddressMoyenIT(#mIT => MoyenIT , #addr : string)//*meme raison comme les normalisations sur le salle*//
+  -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string , addrMAC : JSON)
+   nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur} 
   
-  -PosteTele(#numInt : int , numExt : int , #salletele => Salle , typeTele :{VOIP,TOIP,Landline} , medeleTele : image , marque : text , #host => Employe)
-   numInt unique,not nul , marque not nul , salletele unique,nou nul , typeTele={VOIP} OR typeTele={TOIP} OR typeTele={Landlind}
+  -PosteTele(#numInt : int , numExt : int , #salletele => Salle , typeTele : JSON , medeleTele : image , marque : text , #host => Employe)
+   numInt unique,not nul , marque not nul , salletele unique,nou nul , typeTele not nul
  
   -Employe(#numBadge : int , #salleEmploye => Salle , nom : string , prenom : string , e-mail : string , statut : {CDI,CDD,stagiaire} , emplacement : text)
    numBadge unique,not nul , salleEmploye unique,not nul , nom nou nul , prenom not nul , e-mail not nul , statut={CDI} OR statut={CDD} OR statut={stagiaire}
@@ -54,7 +51,6 @@
                 Projection(MoyenIT,resp) = Projection(Employe,numBadge) OR Projection(MoyenIT,resp) = {}
                 Projection(MoyenIT,MachineLie) = Projection(Machine,codeMach) OR Projection(MoyenIT,MachineLie) = {}
                 Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
-                Projection(MoyenIT,nomIT) = Projection(AddressMoyenIT,mIT)
   
   Vues:
   vSalleMach=();   vSallePost=();  vSalleMoyen=();  vSalleEmpl=();
