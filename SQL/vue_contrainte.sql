@@ -9,7 +9,6 @@
 -- Projection(Salle,nomS) = Proection(PosteTele,salletele)
 -- Projection(Salle,nomS) = Proection(Employe,salleEmploye)
 -- Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
--- Projection(MoyenIT,nomIT) = Projection(AddressMoyenIT,mIT)
 //*les vues suivantes doivent être vides
    comme ca vEtage_Batiment=NULL,etc..
 *//
@@ -65,12 +64,6 @@ CREATE OR REPLACE VIEW vMach_Num AS
 SELECT NCM FROM Machine
 EXCEPT
 SELECT NumCM FROM Num_Entreprise_Mach;
-
-
-CREATE OR REPLACE VIEW vMoyen_addrMAC AS
-SELECT mIT FROM AddressMoyenIT
-EXCEPT
-SELECT nomIT FROM MoyenIT;
 
 
 -- Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle
