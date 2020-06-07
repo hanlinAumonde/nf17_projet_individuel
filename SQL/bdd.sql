@@ -20,7 +20,6 @@ DROP TABLE IF EXISTS RessouceProjet_IT
 
 -- Creation des types
 
-CREATE TYPE typetele AS ENUM ('VOIP','TOIP','Landline');
 CREATE TYPE etat AS ENUM ('CDI','CDD','stagiaire');
 CREATE TYPE typeit AS ENUM ('PC','portable','serveur');
 CREATE TYPE gaz AS ENUM ('Butane','methane','oxygene','azote','hydrogene','helium');
@@ -143,23 +142,19 @@ CREATE TABLE MoyenIT(
     resp VARCHAR(8),
     typeIT typeit NOT NULL,
     OS VARCHAR NOT NULL,
+    addrMAC JSON,
     FOREIGN KEY(salleIT) REFERENCES Salle(nomS),
     FOREIGN KEY(MachineLie) REFERENCES Machine(codeMach),
     FOREIGN KEY(resp) REFERENCES Employe(numBadge)
 );
 
-CREATE TABLE AddressMoyenIT(
-    mIT VARCHAR REFERENCES MoyenIT(nomIT),
-    addrMAC VARCHAR(17),
-    PRIMARY KEY(mIT,addrMAC)
-);
 
 CREATE TABLE PosteTele(
     numInt INT PRIMARY KEY,
     numExt INT,
     salletele VARCHAR NOT NULL,
     hostID VARCHAR(8), 
-    typeTele typetele NOT NULL,
+    typeTele JSON NOT NULL,
     modeleTele VARCHAR,
     marque TEXT NOT NULL,
     FOREIGN KEY(salletele) REFERENCES Salle(nomS),
