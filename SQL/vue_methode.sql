@@ -42,7 +42,7 @@ WHERE RH.proj='DNCV'
 AND RH.EmployeP=E.numBadge
 AND E.numBadge=M.resp;
 
-/*on doit verifier qu'un moyenIT est isponible ou pas,ici on suppose que le moyenIT est 'por1004'*/
+/*on doit verifier qu'un moyenIT est disponible ou pas,ici on suppose que le moyenIT est 'por1004'*/
 
 CREATE OR REPLACE VIEW verif_moyen_dispo AS
 SELECT nomIT FROM MoyenIT WHERE nomIT='por1004'
