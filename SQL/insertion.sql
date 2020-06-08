@@ -119,7 +119,7 @@ INSERT INTO Machine(codeMach,type,sallemach,description,puissanceElec,besoinTrip
 -- Insertion des moyens informatiques :
 
 INSERT INTO MoyenIT VALUES('pcf1000','aaa0015',NULL,'aa1000ez','PC','Windows10','["5E:FF:56:A2:AF:15","3A:FF:62:B3:DE:23"]');
-INSERT INTO MoyenIT VALUES('por1001','abw0004','MCE2-1','bh2019qz','portable','apple','["4F:FF:12:C6:AC:36"]');
+INSERT INTO MoyenIT VALUES('por1004','abw0004','MCE2-1','bh2019qz','portable','apple','["4F:FF:12:C6:AC:36"]');
 INSERT INTO MoyenIT VALUES('pcs1000','aaa0023',NULL,'ac0120ef','serveur','Linux','["8E:FF:17:B4:AD:18"]');
 INSERT INTO MoyenIT VALUES('pcf1012','abw0004','SDR2-2','bh2019qz','PC','Mac','["1E:FF:47:E2:CF:39","2D:FF:36:D2:AE:67"]');
 INSERT INTO MoyenIT VALUES('por2015','bay0000',NULL,NULL,'portable','apple','["3B:FF:45:C7:AB:26"]');
@@ -142,6 +142,6 @@ INSERT INTO RHprojet VALUES('DNCV','ad0401ez','0','testing');
 
 -- Insertion des relations rntre les projets et les moyens informatiques :
 
-INSERT INTO RessouceProjet_IT VALUES('DNCV','por1001');
+INSERT INTO RessouceProjet_IT VALUES('DNCV','por1004');
 INSERT INTO RessouceProjet_IT VALUES('DNCV','pcf1012');
 INSERT INTO RessouceProjet_IT VALUES('EMMPR','por2015');
