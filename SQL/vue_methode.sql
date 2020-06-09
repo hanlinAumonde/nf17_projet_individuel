@@ -11,11 +11,10 @@ GROUP BY S,nomS;
 /*cette methode est pour connaitre la proportion d'ordinateurs occupant la salle pour assurer la sécurité des employés*/
 
 CREATE OR REPLACE VIEW vPropMach_Salle AS
-SELECT S.nomS , (SUM(M.taille)/S.superficieS) AS Prop_Mach
-FROM Salle S
-LEFT JOIN Machine M ON S.nomS=M.sallemach
+SELECT S.nomS , (SUM(M.taille)*100/(SUM(S.superficieS)/COUNT(nomS))) AS Prop_Mach
+FROM Salle S , Machine M 
+WHERE S.nomS=M.sallemach
 GROUP BY S,nomS;
-
 
 -- methode 3
 /*cette methode est pour confirmer l'état du projet*/
