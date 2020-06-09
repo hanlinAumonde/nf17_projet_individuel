@@ -66,6 +66,7 @@ Rq :
   * vEtageSalle  
   * vSalleMach,vSallePost,vSalleMoyen,vSalleEmpl
   * vNbLabo,vNbDepa 
+  * vAddrMAC,vTypeTele
 * Vues des contraintes :
   * vEtage_Batiment
   * vBatiment_ Etage_Salle
