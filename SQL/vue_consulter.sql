@@ -71,3 +71,18 @@ AND S.nomS='abw0004';
     WHERE O.sigle=E.empl_depa
     AND O.sigle=D.sigle
     GROUP BY O.sigle,D.sigle;
+
+--Quelques vues sur les attributs json :
+
+  --Consultation des addresses MAC d'un moyenIT:
+  
+    CREATE OR REPLACE VIEW vAddrMAC AS
+    SELECT M.nomIT , addr.*
+    FROM MoyenIT M , JSON_ARRAY_ELEMENTS(M.addrMAC) addr;
+    
+  --Consultation des types des postes telephniques :
+    
+    CREATE OR REPLACE VIEW vTypeTele AS
+    SELECT P.numInt , typeTele->>'typetele' AS TypeTele
+    FROM PosteTele P;
+    
