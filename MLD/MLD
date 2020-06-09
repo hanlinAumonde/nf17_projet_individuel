@@ -55,6 +55,8 @@
   Vues:
   //--Afficher tous les objets d'un salle--//
   vSalleMach=();  vSallePost=();  vSalleMoyen=();  vSalleEmpl=();
+  //--Les consultations des attributs json--//
+  vvAddrMAC=();   vvTypeTele=();
                 
 --Les organisations :
   
