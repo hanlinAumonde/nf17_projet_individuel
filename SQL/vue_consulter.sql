@@ -61,7 +61,7 @@ AND S.nomS='abw0004';
     FROM Organisation O , Employe E ,Laboratoire L
     WHERE O.sigle=E.empl_labo
     AND O.sigle=L.sigle
-    GROUP BY O.sigle;
+    GROUP BY O.sigle,L.sigle;
     
   --Les departements:
   
