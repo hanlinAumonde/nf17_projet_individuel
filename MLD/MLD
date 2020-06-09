@@ -3,7 +3,7 @@
   -Batiment(#nomB : string , superficieB : int , addrGPS : string , nbEtage : int) avec nomB unique,not nul, superficieB not nul, addrGPS unique,not nul
 
   Vues:
-  vEtagePlan=();
+  vEtagePlan=();  //-- Afficher tous les etages avec leurs plans d'un batiment--//
   
 --Dans les batiments :
   
@@ -13,7 +13,7 @@
    avec superficieS not nul, capaciteHumMax noy nul , planSalle unique , nbPriseElec not nul , nbPriseResaux not nul , (numE,Bati,nomS) key
    
      *Attention,il y a des normalisation ici sur les salles :
-     (Les deux normalisations suivants sont de type 0NF->1NF car les attributs multivalues,et apres normalisations,ils remplissent les conditions de 3NF)
+     (Les deux normalisations suivants sont de type 0NF->1NF car les attributs multivalues,et apres normalisations,la calss Salle remplisse les conditions de 3NF)
      
        -PhotoSalle(#nom_salle => Salle , #photos : image)
        -GazSpecifique(#nom_Salle => Salle , #Gaz : {Butane, méthane, oxygène, azote, hydrogène, hélium})
@@ -26,7 +26,7 @@
   !ATTENTION : Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle.(mis dans vue_contrinte.sql)
   
   Vues:
-  vEtageSalle=()
+  vEtageSalle=()  //--Afficher tous les salles d'un batiment dans un etage--//
 
 --Les objets qui peuvent se trouver dans les salles :
   
@@ -35,7 +35,7 @@
       
       *Normalisation: 
          Num_Entreprise_Mach(#NumCM : int , EM : string) parce que NCN peut deteminer EM
-      //*Parce que on a le DF NCM->EM,la table Machine est en 2NF,donc on choisit le normalisation 2NF->3NF*//
+      //*Parce que on a le DF NCM->EM qui est un DF des attributs non cles,la table Machine est en 2NF,donc on choisit le normalisation 2NF->3NF*//
    
   -MoyenIT(#nomIT : string , #salleIT => Salle , #MachineLie => Machine , #resp => Employe , typeIT : {PC,portable,serveur} , OS : string , addrMAC : JSON)
    nomIT unique,not nul , salleIT unique,not nul , OS not nul , typeIT={PC} OR typeIT={portable} OR typeIT={serveur} 
@@ -53,7 +53,8 @@
                 Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
   
   Vues:
-  vSalleMach=();   vSallePost=();  vSalleMoyen=();  vSalleEmpl=();
+  //--Afficher tous les objets d'un salle--//
+  vSalleMach=();  vSallePost=();  vSalleMoyen=();  vSalleEmpl=();
                 
 --Les organisations :
   
@@ -70,6 +71,7 @@
   
   Vues:
   vNbLabo=();   vNbDepa=();
+  //--Afficher les nbs des employes de tous les organisations--//
  
 --Les relations entre les organisations et les employés : 
 
@@ -135,15 +137,13 @@
   Contrainte : type = {Mach_labo} OR type = {Mach_depa}
 
 VUES METHODES :
-vNb_RESTE_empl_salle=();
-vPropMach_Salle=();
-vProjet_En_Cours=();
-vProjet_Pret=();
-vMoyen_Projet_Liste=();
-verif_moyen_dispo=();
-vNB_Proj_Empl=();
-vEmployeZombie=();
-vNB_Moyen_Empl=();
+ Vue des methodes :
+  -vNb _ RESTE _ empl _salle(); //--assurer que le nombre de personnes dans la salle ne dépasse pas la capacité de la salle--//
+  -vPropMach_Salle(); //--connaitre la proportion d'ordinateurs occupant la salle pour assurer la sécurité des employés--//
+  -vProjet_ En_ Cours();  vProjet_Pret(); //--confirmer l'état du projet--//
+  -vMoyen_ Projet _ Liste,verif_ moyen _dispo(); //--donner une liste des moyenITs disponibles(Utiliser uniquement moyenIT, qui est en charge des membres du projet)--//
+  -vNB_ Proj _Empl(); vEmployeZombie(); //--recherche d'employés sans aucun projet--//
+  -vNB_ Moyen _Empl(); //--trouver des employés responsables de plusieurs moyensIT--//
 
 
 L'ensemble est 3NF car   
