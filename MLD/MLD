@@ -139,7 +139,7 @@
 VUES METHODES :
  Vue des methodes :
   -vNb _ RESTE _ empl _salle(); //--assurer que le nombre de personnes dans la salle ne dépasse pas la capacité de la salle--//
-  -vPropMach_Salle(); //--connaitre la proportion d'ordinateurs occupant la salle pour assurer la sécurité des employés--//
+  -vPropMach_Salle(); //--connaitre la proportion d'ordinateurs occupant la salle pour assurer la sécurité des employés(seules les salle qui ont les machines vont etre affiche)--//
   -vProjet_ En_ Cours();  vProjet_Pret(); //--confirmer l'état du projet--//
   -vMoyen_ Projet _ Liste,verif_ moyen _dispo(); //--donner une liste des moyenITs disponibles(Utiliser uniquement moyenIT, qui est en charge des membres du projet)--//
   -vNB_ Proj _Empl(); vEmployeZombie(); //--recherche d'employés sans aucun projet--//
