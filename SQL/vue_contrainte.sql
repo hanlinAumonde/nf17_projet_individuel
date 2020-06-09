@@ -9,9 +9,9 @@
 -- Projection(Salle,nomS) = Proection(PosteTele,salletele)
 -- Projection(Salle,nomS) = Proection(Employe,salleEmploye)
 -- Projection(Machine,NCM) = Projection(Num_Entreprise_Mach,NumCM)
-//*les vues suivantes doivent être vides
+/*les vues suivantes doivent être vides
    comme ca vEtage_Batiment=NULL,etc..
-*//
+*/
 
 
 CREATE OR REPLACE VIEW vEtage_Batiment AS
@@ -67,7 +67,7 @@ SELECT NumCM FROM Num_Entreprise_Mach;
 
 
 -- Si un objet est associé à un autre objet, les deux objets doivent être dans la même salle
-//*les vues suivantes doivent être vides*//
+/*les vues suivantes doivent être vides*/
 CREATE OR REPLACE VIEW vPoste_Empl_Salle AS
 SELECT P.salletele FROM PosteTele P WHERE P.hostID IS NOT NULL
 EXCEPT
@@ -92,7 +92,7 @@ SELECT D.sigle FROM Departement D
 INTERSECT
 SELECT P.sigle FROM Projet P;
 
-//*on doit avoir vIntersec_org=NULL*//
+/*on doit avoir vIntersec_org=NULL*/
 
 -- Union((Projection(Laboratoire,sigle),Projection(Departement,sigle),Projection(Projet,sigle)) = Projection(Organisation,sigle)
 
@@ -108,4 +108,4 @@ SELECT O.sigle FROM Organisation O
 EXCEPT
 SELECT S AS sigle FROM vSigle_union;
 
-//*on doit verifier que verif_union=NULL*//
+/*on doit verifier que verif_union=NULL*/
