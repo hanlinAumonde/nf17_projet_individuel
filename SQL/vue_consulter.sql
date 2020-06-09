@@ -57,15 +57,17 @@ AND S.nomS='abw0004';
   --Les laboratoires:
   
     CREATE OR REPLACE VIEW vNbLabo AS
-    SELECT O.sigle , COUNT(E.numBadge) AS nb_empl
-    FROM Organisation O , Employe E
+    SELECT O.sigle , L.directeur , COUNT(E.numBadge) AS nb_empl
+    FROM Organisation O , Employe E ,Laboratoire L
     WHERE O.sigle=E.empl_labo
+    AND O.sigle=L.sigle
     GROUP BY O.sigle;
     
   --Les departements:
   
     CREATE OR REPLACE VIEW vNbDepa AS
-    SELECT O.sigle , COUNT(E.numBadge) AS nb_empl
-    FROM Organisation O , Employe E
+    SELECT O.sigle , D.directeur , COUNT(E.numBadge) AS nb_empl
+    FROM Organisation O , Employe E ,Departement D
     WHERE O.sigle=E.empl_depa
-    GROUP BY O.sigle;
+    AND O.sigle=D.sigle
+    GROUP BY O.sigle,D.sigle;
