@@ -102,6 +102,13 @@ INSERT INTO Employe VALUES('ca9000ep','bay0002','Mike','Ethan','Methan@gmail.com
 INSERT INTO Employe VALUES('cv1102qw','abw0023','Jade','William','Jwilliam@gmail.com','CDI','labo_02','LVS','CCE');
 INSERT INTO Employe VALUES('jk1034gh','bay0011','Bob','Kevin','Bkevin@hotmail.com','CDD','bureau_a01','LC',NULL);
 
+  UPDATE Laboratoire SET directeur='jk1034gh' WHERE sigle='LC';
+  UPDATE Laboratoire SET directeur='ad0401ez' WHERE sigle='LVS';
+  UPDATE Departement SET directeur='cv1102qw' WHERE sigle='CCE';
+  UPDATE Departement SET directeur='aa1000ez' WHERE sigle='DRMC';
+  UPDATE Departement SET directeur='ad0401ez' WHERE sigle='DDNP';
+  UPDATE Departement SET directeur='as1900oz' WHERE sigle='SIQ';
+
 -- Insertion des machines :
 
    INSERT INTO Num_Entreprise_Mach VALUES('#wg1208','BPIfrance');
